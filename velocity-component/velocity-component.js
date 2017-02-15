@@ -18,14 +18,14 @@ class VelocityComponent extends Component {
   }
 
   componentWillUpdate(newProps) {
-    if (!isEqual(newProps.animation, this.props.animation)) {
+    if (!isEqual(newProps.keyframes, this.props.keyframes)) {
       this._stopAnimation()
       this._scheduleAnimation()
     }
   }
 
   runAnimation(config = {}) {
-    if (!this.props.animation) {
+    if (!this.props.keyframes) {
       return
     }
 
@@ -38,14 +38,17 @@ class VelocityComponent extends Component {
       Velocity(dom, 'finishAll', true)
     }
 
-    const { animation, animationProperty, ...opts } = this.props
-    const animations = [].concat(animation)
-    const properties = animations.map(
-      (_, index) => Object.assign({}, opts, [].concat(animationProperty)[index])
-    )
+    const { keyframes } = this.props
 
-    animations.forEach((ani, index) => {
-      Velocity(this._getDOMTarget(), ani, properties[index])
+    keyframes.forEach(keyframe => {
+      const { duration = 0, delay = 0, easing = 'linear', loop = 0, ...props } = keyframe
+
+      Velocity(this._getDOMTarget(), props, {
+        duration,
+        delay,
+        easing,
+        loop
+      })
     })
   }
 
@@ -79,7 +82,7 @@ class VelocityComponent extends Component {
   }
 
   render() {
-    return this.props.children[0]
+    return this.props.children.length ? this.props.children[0] : <span {...this.props}></span>
   }
 
   getDefaultProps() {
