@@ -1,7 +1,9 @@
 {
   "presets": ["es2015", "stage-0"],
   "plugins": [
-    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-object-assign",
+    "es6-promise",
     [ "transform-react-jsx", { "pragma": "h" } ]
   ]
 }

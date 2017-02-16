@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import Velocity from 'velocity-animate'
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash.isequal'
 
 class VelocityComponent extends Component {
   componentDidMount() {
