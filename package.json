@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=develop node build/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=testing node_modules/.bin/nyc --reporter lcov --reporter text --report-dir test/coverage --require babel-core/register node_modules/.bin/mocha test/*.test.js && rm -rf .nyc_output",
     "build": "rollup -c build/rollup.config.js"
   },
   "keywords": [
@@ -38,6 +38,7 @@
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
     "postcss": "^5.2.14",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.7.1",
@@ -57,6 +58,9 @@
     "preact": "^7.2.0",
     "stylus": "^0.54.5",
     "velocity-animate": "^1.4.2"
+  },
+  "engine": {
+    "node": ">=4.0.0"
   },
   "repository": {
     "type": "git",

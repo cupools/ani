@@ -13,26 +13,62 @@ describe('ani-loader', () => {
         height 10px
         opacity 1
         animation fade-out 1s 2s linear infinite
-      @keyframes fade-out
-        from
-          opacity 1
-        to
-          opacity 0
+      @fade-out
+        opacity 0
     `
 
     loader.call(null, stylesheet).should.be.eql({
-      width: '10px',
-      height: '10px',
-      opacity: 1,
-      keyframes: [{
-        opacity: 1
-      }, {
-        opacity: 0,
-        delay: 2000,
-        duration: 1000,
-        easing: 'linear',
-        loop: true
-      }]
+      '.foo': {
+        width: '10px',
+        height: '10px',
+        opacity: 1,
+        animation: 'fade-out 1s 2s linear infinite',
+        keyframes: [{
+          __aniName: 'fade-out',
+          opacity: 0,
+          delay: 2000,
+          duration: 1000,
+          easing: 'linear',
+          loop: 'infinite'
+        }]
+      }
+    })
+  })
+
+  it('should work', () => {
+    const stylesheet = `
+      .foo
+        width 10px
+        height 10px
+        opacity 1
+        animation fade-in 1s,
+                  fade-out 2s 1s ease-in 2
+
+      @fade-in
+        opacity 1
+      @fade-out
+        opacity 0
+    `
+
+    loader.call(null, stylesheet).should.be.eql({
+      '.foo': {
+        width: '10px',
+        height: '10px',
+        opacity: 1,
+        animation: 'fade-in 1s, fade-out 2s 1s ease-in 2',
+        keyframes: [{
+          __aniName: 'fade-in',
+          opacity: 1,
+          duration: 1000
+        }, {
+          __aniName: 'fade-out',
+          opacity: 0,
+          duration: 2000,
+          delay: 1000,
+          easing: 'ease-in',
+          loop: 2
+        }]
+      }
     })
   })
 })
