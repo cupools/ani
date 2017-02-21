@@ -1,1 +1,2 @@
-exports.VelocityComponent = require('./lib/velocity-component')
+exports.VelocityComponent = require('./velocity-component')
+exports.loader = require('./ani-loader')

@@ -1,0 +1,4 @@
+{
+  "name": "loader",
+  "main": "lib/loader.js"
+}

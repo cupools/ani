@@ -10,8 +10,8 @@ const external = Object.keys(pkg.peerDependencies || {}).concat(Object.keys(pkg.
 
 export default {
   entry: 'velocity-component/src/velocity-component.js',
-  dest: 'lib/velocity-component.js',
-  sourceMap: path.resolve('lib/velocity-component.js'),
+  dest: 'velocity-component/lib/velocity-component.js',
+  sourceMap: path.resolve('velocity-component/lib/velocity-component.js'),
   moduleName: 'VelocityComponent',
   format: 'umd',
   external,

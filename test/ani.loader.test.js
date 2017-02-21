@@ -42,8 +42,7 @@ describe('ani-loader', () => {
         height 10px
         opacity 1
         animation fade-in 1s,
-                  fade-out 2s 1s ease-in 2
-
+                  fade-out 2s 10ms ease-in 2
       @fade-in
         opacity 1
       @fade-out
@@ -55,7 +54,7 @@ describe('ani-loader', () => {
         width: '10px',
         height: '10px',
         opacity: 1,
-        animation: 'fade-in 1s, fade-out 2s 1s ease-in 2',
+        animation: 'fade-in 1s, fade-out 2s 10ms ease-in 2',
         keyframes: [{
           __aniName: 'fade-in',
           opacity: 1,
@@ -64,7 +63,7 @@ describe('ani-loader', () => {
           __aniName: 'fade-out',
           opacity: 0,
           duration: 2000,
-          delay: 1000,
+          delay: 10,
           easing: 'ease-in',
           loop: 2
         }]

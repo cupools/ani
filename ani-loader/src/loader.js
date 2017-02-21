@@ -1,10 +1,10 @@
 import stylus from 'stylus'
 import postcss from 'postcss'
 
-export default function process(content) {
+module.exports = function process(content) {
   const css = preprocess(content)
   const obj = render(css)
-  return obj
+  return `module.exports = ${JSON.stringify(obj)};`
 }
 
 function preprocess(content) {
@@ -71,6 +71,10 @@ function generateAnimationParams(animation) {
   const loopReg = /^(\d|infinite|forwards|steps\(\d+\))$/i
   const timeConvert = n => parseFloat(n) * (/\d+s$/.test(n) ? 1e3 : 1)
 
+  if (!animation) {
+    return []
+  }
+
   return animation.split(',').map(raw => {
     const params = raw.trim().replace(/\s+/g, ' ').split(' ')
     return params.reduce(
@@ -99,4 +103,3 @@ function generateAnimationParams(animation) {
 function convertValue(str) {
   return isNaN(str) ? str : parseFloat(str)
 }
-
