@@ -1,10 +1,15 @@
 import stylus from 'stylus'
 import postcss from 'postcss'
 
-module.exports = function process(content) {
+export const loader = function loader(content) {
+  const raw = JSON.stringify(process(content))
+  return `module.exports = ${raw};`
+}
+
+export const process = function process(content) {
   const css = preprocess(content)
   const obj = render(css)
-  return `module.exports = ${JSON.stringify(obj)};`
+  return obj
 }
 
 function preprocess(content) {

@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import Chai from 'chai'
-import loader from '../ani-loader/src/loader'
+import { process } from '../ani-loader'
 
 Chai.should()
 
@@ -17,7 +17,7 @@ describe('ani-loader', () => {
         opacity 0
     `
 
-    loader.call(null, stylesheet).should.be.eql({
+    process.call(null, stylesheet).should.be.eql({
       '.foo': {
         width: '10px',
         height: '10px',
@@ -49,7 +49,7 @@ describe('ani-loader', () => {
         opacity 0
     `
 
-    loader.call(null, stylesheet).should.be.eql({
+    process.call(null, stylesheet).should.be.eql({
       '.foo': {
         width: '10px',
         height: '10px',
@@ -66,6 +66,27 @@ describe('ani-loader', () => {
           delay: 10,
           easing: 'ease-in',
           loop: 2
+        }]
+      }
+    })
+  })
+
+  it('should work', () => {
+    const stylesheet = `
+      .foo
+        width 10px
+        animation to(opacity, 1, translateY, 10px) 2s
+    `
+
+    process.call(null, stylesheet).should.be.eql({
+      '.foo': {
+        width: '10px',
+        animation: 'anonymous 2s',
+        keyframes: [{
+          __aniName: 'anonymous',
+          opacity: 1,
+          translateY: 10,
+          duration: 2000
         }]
       }
     })

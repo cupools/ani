@@ -1,4 +1,4 @@
 {
   "name": "loader",
-  "main": "lib/loader.js"
+  "main": "index.js"
 }

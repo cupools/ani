@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.process = exports.loader = undefined;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _stylus = require('stylus');
@@ -14,10 +19,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-module.exports = function process(content) {
+var loader = exports.loader = function loader(content) {
+  var raw = JSON.stringify(process(content));
+  return 'module.exports = ' + raw + ';';
+};
+
+var process = exports.process = function process(content) {
   var css = preprocess(content);
   var obj = render(css);
-  return 'module.exports = ' + JSON.stringify(obj) + ';';
+  return obj;
 };
 
 function preprocess(content) {
