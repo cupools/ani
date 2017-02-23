@@ -38,7 +38,10 @@ class VelocityComponent extends Component {
       Velocity(dom, 'finishAll', true)
     }
 
-    const { keyframes } = this.props
+    const { keyframes, ...ani } = this.props
+
+    // FIXME, origin status
+    Velocity(this._getDOMTarget(), ani, { duration: 0 })
 
     keyframes.forEach(keyframe => {
       const { duration = 0, delay = 0, easing = 'linear', loop = 0, ...props } = keyframe
