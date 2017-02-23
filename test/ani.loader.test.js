@@ -85,7 +85,7 @@ describe('ani-loader', () => {
         keyframes: [{
           __aniName: 'anonymous',
           opacity: 1,
-          translateY: 10,
+          translateY: '10px',
           duration: 2000
         }]
       }

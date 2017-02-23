@@ -7,6 +7,10 @@ exports.process = exports.loader = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _stylus = require('stylus');
 
 var _stylus2 = _interopRequireDefault(_stylus);
@@ -32,10 +36,11 @@ var process = exports.process = function process(content) {
 
 function preprocess(content) {
   var raw = '';
-  (0, _stylus2.default)(content).render(function (err, css) {
+  (0, _stylus2.default)(content).import(_path2.default.join(__dirname, 'mixin')).render(function (err, css) {
     if (err) throw err;
     raw = css;
   });
+
   return raw;
 }
 
@@ -60,13 +65,25 @@ function render(css) {
     var declarations = walkNode(rule, 'decl', function (decl) {
       return _defineProperty({}, decl.prop, convertValue(decl.value));
     });
+
+    if (!declarations.animation) {
+      return {};
+    }
+
     var animationParams = generateAnimationParams(declarations.animation);
 
     var keyframes = animationParams.map(function (item) {
+      var __aniName = item.__aniName;
+
+
+      if (__aniName.includes('__SPLIT__')) {
+        return _extends({}, item, getAnimationParamsFromString(__aniName));
+      }
       return _extends({}, item, keyframeStorage[item.__aniName] || {});
     });
 
     return _defineProperty({}, selector, _extends({}, declarations, {
+      animation: declarations.animation.replace(/to\(.*?\)/g, 'anonymous'),
       keyframes: keyframes
     }));
   });
@@ -100,7 +117,9 @@ function generateAnimationParams(animation) {
     return [];
   }
 
-  return animation.split(',').map(function (raw) {
+  return animation.replace(/to\((.*?)\)/g, function (_, $1) {
+    return 'to(' + $1.replace(/\s*,\s*/g, '__SPLIT__') + ')';
+  }).split(',').map(function (raw) {
     var params = raw.trim().replace(/\s+/g, ' ').split(' ');
     return params.reduce(function (ret, str) {
       // the first parameter should be `aniName`
@@ -120,6 +139,14 @@ function generateAnimationParams(animation) {
       return _extends({}, ret, { easing: str });
     }, {});
   });
+}
+
+function getAnimationParamsFromString(raw) {
+  var params = raw.slice(3, -1).split('__SPLIT__');
+  return params.reduce(function (ret, item, index) {
+    if (index % 2 === 1) return ret;
+    return _extends({}, ret, _defineProperty({}, item, convertValue(params[index + 1])));
+  }, { __aniName: 'anonymous' });
 }
 
 function convertValue(str) {
