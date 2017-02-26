@@ -1,16 +1,7 @@
 /* eslint-env mocha, browser */
+import { h, render } from 'preact'
+import VelocityComponent from '../velocity-component/'
 
-import { h, Component, render } from 'preact'
-import VelocityComponent from '../velocity-component'
-
-class Todo extends Component {
-  componentWillMount() {
-    if (this.props.end) this.props.end()
-  }
-  render() {
-    return <div></div>
-  }
-}
 
 describe('velocity-component', () => {
   let root = null
@@ -20,10 +11,10 @@ describe('velocity-component', () => {
   const $ = s => [].slice.call(container.querySelectorAll(s))
 
   beforeEach(() => {
-    root = render(<div>></div>, container, root)
+    root = render(<VelocityComponent />, container, root)
   })
 
   it('should works', () => {
-    $('.item').should.be.lengthOf(4)
+    $('span').should.be.lengthOf(1)
   })
 })

@@ -10,7 +10,8 @@ module.exports = config => {
     exclude: [],
     preprocessors: {
       'test/**/*.js': ['webpack'],
-      'src/**/*.js': ['webpack']
+      'src/**/*.js': ['webpack'],
+      '**/*.js': ['sourcemap']
     },
     client: {
       mocha: {

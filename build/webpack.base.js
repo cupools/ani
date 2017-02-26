@@ -4,14 +4,6 @@ module.exports = {
   entry: {
     'velocity-component': './velocity-component/src/velocity-component.js'
   },
-  output: {
-    filename: '[name].js',
-    sourceMapFilename: '[file].map',
-    path: path.resolve('lib/'),
-    library: '[name]',
-    libraryTarget: 'umd',
-    umdNamedDefine: true
-  },
   module: {
     rules: [{
       test: /\.js?$/,
@@ -20,9 +12,5 @@ module.exports = {
         loader: 'babel-loader'
       }
     }]
-  },
-  externals: {
-    preact: 'preact',
-    'velocity-animate': 'velocity-animate'
   }
 }
