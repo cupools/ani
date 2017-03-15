@@ -75,18 +75,18 @@ describe('ani-loader', () => {
     const stylesheet = `
       .foo
         width 10px
-        animation to(opacity, 1, translateY, 10px) 2s
+        animation to(opacity, 1, translateY, 10px) 2.5s
     `
 
     process.call(null, stylesheet).should.be.eql({
       '.foo': {
         width: '10px',
-        animation: 'anonymous 2s',
+        animation: 'anonymous 2.5s',
         keyframes: [{
           __aniName: 'anonymous',
           opacity: 1,
           translateY: '10px',
-          duration: 2000
+          duration: 2500
         }]
       }
     })

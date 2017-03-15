@@ -86,9 +86,9 @@ function walkNode(root, type, fn) {
  * generate animation parameters from animation declaration
  */
 function generateAnimationParams(animation) {
-  const timeReg = /^\d+m?s$/i
+  const timeReg = /^(\d+)?(\.)?\d+m?s$/i
   const loopReg = /^(\d|infinite|forwards|steps\(\d+\))$/i
-  const timeConvert = n => parseFloat(n) * (/\d+s$/.test(n) ? 1e3 : 1)
+  const timeConvert = n => parseFloat(n) * (/ms$/.test(n) ? 1 : 1e3)
 
   if (!animation) {
     return []

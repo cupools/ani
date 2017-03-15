@@ -107,10 +107,10 @@ function walkNode(root, type, fn) {
  * generate animation parameters from animation declaration
  */
 function generateAnimationParams(animation) {
-  var timeReg = /^\d+m?s$/i;
+  var timeReg = /^(\d+)?(\.)?\d+m?s$/i;
   var loopReg = /^(\d|infinite|forwards|steps\(\d+\))$/i;
   var timeConvert = function timeConvert(n) {
-    return parseFloat(n) * (/\d+s$/.test(n) ? 1e3 : 1);
+    return parseFloat(n) * (/ms$/.test(n) ? 1 : 1e3);
   };
 
   if (!animation) {

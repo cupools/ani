@@ -2,7 +2,6 @@
 import { h, render } from 'preact'
 import VelocityComponent from '../velocity-component/'
 
-
 describe('velocity-component', () => {
   let root = null
   const container = document.createElement('div')

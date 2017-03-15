@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=develop node build/server.js",
     "babel": "rm -rf ani-loader/lib && node node_modules/babel-cli/bin/babel ani-loader/src -d ani-loader/lib -D -w",
-    "test": "cross-env NODE_ENV=testing node_modules/.bin/nyc --reporter lcov --reporter text --report-dir test/coverage --require babel-core/register node_modules/.bin/mocha test/*.test.js && rm -rf .nyc_output",
+    "test": "cross-env NODE_ENV=testing node_modules/.bin/nyc --reporter lcov --reporter text --report-dir test/coverage --require babel-core/register node_modules/.bin/mocha test/ani.loader.test.js && rm -rf .nyc_output",
     "test:karma": "karma start test/karma.conf.js --single-run=true",
     "build": "rollup -c build/rollup.config.js"
   },
