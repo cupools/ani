@@ -1,7 +1,7 @@
 import { h, Component } from 'preact'
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui.min'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash.isEqual'
 
 console.log(Velocity.RegisterEffect)
 
