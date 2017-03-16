@@ -1,6 +1,9 @@
 import { h, Component } from 'preact'
 import Velocity from 'velocity-animate'
+import 'velocity-animate/velocity.ui.min'
 import { isEqual } from 'lodash'
+
+console.log(Velocity.RegisterEffect)
 
 class VelocityComponent extends Component {
   componentDidMount() {
@@ -44,14 +47,20 @@ class VelocityComponent extends Component {
     Velocity(this._getDOMTarget(), ani, { duration: 0 })
 
     keyframes.forEach(keyframe => {
-      const { duration = 0, delay = 0, easing = 'linear', loop = 0, ...props } = keyframe
+      const { duration = 0, delay = 0, easing = 'linear', loop = 0, complete = null, ...props } = keyframe
 
-      Velocity(this._getDOMTarget(), props, {
-        duration,
-        delay,
-        easing,
-        loop
-      })
+      if (keyframe.keyframes) {
+        // Velocity Effect calls
+        const __aniName = `transition${Math.random().toString().slice(2, 10)}`
+        Velocity.RegisterEffect(__aniName, {
+          calls: keyframe.keyframes.map(item => [item, item.durationPercentage]),
+          loop
+        })
+        Velocity(this._getDOMTarget(), __aniName, { duration, delay, easing, loop, complete })
+      } else {
+        // single transform
+        Velocity(this._getDOMTarget(), props, { duration, delay, easing, loop, complete })
+      }
     })
   }
 
