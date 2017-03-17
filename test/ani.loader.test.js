@@ -91,4 +91,51 @@ describe('ani-loader', () => {
       }
     })
   })
+
+  it('should work with keyframes', () => {
+    const stylesheet = `
+      .foo
+        width 10px
+        animation shake 2s 1s easing
+
+      @keyframes shake
+        0%
+          rotate 0
+        10%
+          rotate 10deg
+        20%
+          rotate -10deg
+        30%
+          rotate 0
+        100%
+          rotate 0
+    `
+
+    process.call(null, stylesheet).should.be.eql({
+      '.foo': {
+        width: '10px',
+        animation: 'shake 2s 1s easing',
+        keyframes: [{
+          __aniName: 'shake',
+          width: '10px',
+          keyframes: [{
+            rotate: '0',
+            durationPercentage: 0
+          }, {
+            rotate: '10deg',
+            durationPercentage: 0.1
+          }, {
+            rotatae: '-10deg',
+            durationPercentage: 0.1
+          }, {
+            rotate: '0',
+            durationPercentage: 0.1
+          }, {
+            rotate: '0',
+            durationPercentage: 0.7
+          }]
+        }]
+      }
+    })
+  })
 })
