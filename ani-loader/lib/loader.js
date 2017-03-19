@@ -119,7 +119,9 @@ function generateAnimationParams(animation) {
 
   return animation.replace(/to\((.*?)\)/g, function (_, $1) {
     return 'to(' + $1.replace(/\s*,\s*/g, '__SPLIT__') + ')';
-  }).split(',').map(function (raw) {
+  }).split(',').filter(function (item) {
+    return !!item;
+  }).map(function (raw) {
     var params = raw.trim().replace(/\s+/g, ' ').split(' ');
     return params.reduce(function (ret, str) {
       // the first parameter should be `aniName`

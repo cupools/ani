@@ -97,6 +97,7 @@ function generateAnimationParams(animation) {
   return animation
     .replace(/to\((.*?)\)/g, (_, $1) => `to(${$1.replace(/\s*,\s*/g, '__SPLIT__')})`)
     .split(',')
+    .filter(item => !!item)
     .map(raw => {
       const params = raw.trim().replace(/\s+/g, ' ').split(' ')
       return params.reduce(
