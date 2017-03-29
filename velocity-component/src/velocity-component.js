@@ -92,7 +92,9 @@ class VelocityComponent extends Component {
   }
 
   render() {
-    return this.props.children.length ? this.props.children[0] : <span {...this.props}></span>
+    return this.props.children.length
+      ? this.props.children[0]
+      : <span key={Math.random().toString().slice(2, 8)} {...this.props}></span>
   }
 
   getDefaultProps() {
